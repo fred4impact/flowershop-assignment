@@ -1,5 +1,5 @@
 # Task 1: Flowchart and Pseudocode
-
+>.
 +----------------------------------------------------+
 |                    Start                           |
 +----------------------------------------------------+
@@ -40,7 +40,7 @@
 
 # TASK 1: Pseudocode:
 
----
+>.
 BEGIN
     WHILE (true)
         DISPLAY "Flower shop menu"
@@ -96,7 +96,9 @@ END METHOD
 
 # Task 3: Algorithm, Flowchart, Pseudocode, and Java Code for Summary Statistics
 
+
 ## Flowchart for Summary Statistics:
+>.
 +----------------------------------------------------+
 |                  Start                             |
 +----------------------------------------------------+
