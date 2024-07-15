@@ -1,5 +1,5 @@
 # Task 1: Flowchart and Pseudocode
-![Alt text](/Flowchart-and-Pseudocode.png)
+![Alt text](/Algorithm-Flowchart-Pseudocod.png
 
 # TASK 1: Pseudocode:
 
