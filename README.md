@@ -1,5 +1,5 @@
 # Task 1: Flowchart and Pseudocode
-![Alt text](/Algorithm-Flowchart-Pseudocod.png
+![Alt text](/Flowchart-and-Pseudocode.png)
 
 # TASK 1: Pseudocode:
 
@@ -61,7 +61,7 @@ END METHOD
 
 
 ## Flowchart for Summary Statistics:
-![Alt text](/Algorithm-Flowchart-Pseudocod)
+![Alt text](/Algorithm-Flowchart-Pseudocod.png)
 
 
 ## Pseudocode for Summary Statistics:
