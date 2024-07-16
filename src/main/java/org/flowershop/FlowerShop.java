@@ -6,31 +6,35 @@ public class FlowerShop {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the Flower Shop!");
+
         while (true) {
             displayMenu();
-            int choice = scanner.nextInt();
+            System.out.print("Please enter your choice (Order, Statistics, or Exit): ");
+            String choice = scanner.next().toLowerCase();
+
             switch (choice) {
-                case 1:
+                case "order":
                     orderDetailsAndPriceCalculation(scanner);
                     break;
-                case 2:
+                case "statistics":
                     summaryStatistics();
                     break;
-                case 3:
-                    System.out.println("Exiting the program.");
+                case "exit":
+                    System.out.println("Exiting the program. Thank you for visiting the Flower Shop!");
                     scanner.close();
                     return;
                 default:
-                    System.out.println("Invalid choice, please select 1, 2, or 3.");
+                    System.out.println("Invalid choice, please enter 'Order', 'Statistics', or 'Exit'.");
             }
         }
     }
 
     public static void displayMenu() {
-        System.out.println("Flower shop menu");
-        System.out.println("1. Order bouquet and get the price.");
-        System.out.println("2. Display statistics");
-        System.out.println("3. Exit");
+        System.out.println("\nFlower Shop Menu");
+        System.out.println("Order - Order bouquet and get the price.");
+        System.out.println("Statistics - Display statistics");
+        System.out.println("Exit - Exit the program");
     }
 
     public static void orderDetailsAndPriceCalculation(Scanner scanner) {
@@ -40,28 +44,28 @@ public class FlowerShop {
         double[] colorMarkUp = {1.3, 1.2, 1.1, 1.1, 1.2, 1.0};
 
         // Get user input for size
-        System.out.println("Select size (1: Small, 2: Medium, 3: Large): ");
+        System.out.print("Select size (1: Small, 2: Medium, 3: Large): ");
         int sizeChoice = scanner.nextInt();
         while (sizeChoice < 1 || sizeChoice > 3) {
-            System.out.println("Invalid choice. Select size (1: Small, 2: Medium, 3: Large): ");
+            System.out.print("Invalid choice. Select size (1: Small, 2: Medium, 3: Large): ");
             sizeChoice = scanner.nextInt();
         }
         double sizePrice = sizeMarkUp[sizeChoice - 1];
 
         // Get user input for flower
-        System.out.println("Select flower (1: Rose, 2: Lily, 3: Carnations, 4: Daffodil, 5: Gerbera, 6: Chrysanthemum, 7: Assorted): ");
+        System.out.print("Select flower (1: Rose, 2: Lily, 3: Carnations, 4: Daffodil, 5: Gerbera, 6: Chrysanthemum, 7: Assorted): ");
         int flowerChoice = scanner.nextInt();
         while (flowerChoice < 1 || flowerChoice > 7) {
-            System.out.println("Invalid choice. Select flower (1: Rose, 2: Lily, 3: Carnations, 4: Daffodil, 5: Gerbera, 6: Chrysanthemum, 7: Assorted): ");
+            System.out.print("Invalid choice. Select flower (1: Rose, 2: Lily, 3: Carnations, 4: Daffodil, 5: Gerbera, 6: Chrysanthemum, 7: Assorted): ");
             flowerChoice = scanner.nextInt();
         }
         double flowerPrice = flowerMarkUp[flowerChoice - 1];
 
         // Get user input for color
-        System.out.println("Select color (1: White, 2: Red, 3: Pink, 4: Yellow, 5: Blue, 6: Mixed): ");
+        System.out.print("Select color (1: White, 2: Red, 3: Pink, 4: Yellow, 5: Blue, 6: Mixed): ");
         int colorChoice = scanner.nextInt();
         while (colorChoice < 1 || colorChoice > 6) {
-            System.out.println("Invalid choice. Select color (1: White, 2: Red, 3: Pink, 4: Yellow, 5: Blue, 6: Mixed): ");
+            System.out.print("Invalid choice. Select color (1: White, 2: Red, 3: Pink, 4: Yellow, 5: Blue, 6: Mixed): ");
             colorChoice = scanner.nextInt();
         }
         double colorPrice = colorMarkUp[colorChoice - 1];
