@@ -1,181 +1,105 @@
 package org.flowershop;
 
+import org.flowershop.Bouquet;
+import org.flowershop.Colour;
+import org.flowershop.Flower;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FlowerShop {
+class FlowerShop {
+    private final ArrayList<Bouquet> bouquets;
 
-    public static void main(String[] args) {
+    public FlowerShop() {
+        bouquets = new ArrayList<>();
+    }
+
+    public void orderBouquet() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to the Flower Shop!");
+
+        System.out.println("Choose Size (1: Small, 2: Medium, 3: Large): ");
+        int sizeChoice = scanner.nextInt();
+        double sizeMarkup = 0;
+        switch (sizeChoice) {
+            case 1: sizeMarkup = Size.SMALL; break;
+            case 2: sizeMarkup = Size.MEDIUM; break;
+            case 3: sizeMarkup = Size.LARGE; break;
+            default: System.out.println("Invalid choice."); return;
+        }
+
+        System.out.println("Choose Flower (1: Rose, 2: Lily, 3: Carnation, 4: Daffodil, 5: Gerbera, 6: Chrysanthemum, 7: Assorted): ");
+        int flowerChoice = scanner.nextInt();
+        double flowerMarkup = 0;
+        switch (flowerChoice) {
+            case 1: flowerMarkup = Flower.ROSE; break;
+            case 2: flowerMarkup = Flower.LILY; break;
+            case 3: flowerMarkup = Flower.CARNATION; break;
+            case 4: flowerMarkup = Flower.DAFFODIL; break;
+            case 5: flowerMarkup = Flower.GERBERA; break;
+            case 6: flowerMarkup = Flower.CHRYSANTHEMUM; break;
+            case 7: flowerMarkup = Flower.ASSORTED; break;
+            default: System.out.println("Invalid choice."); return;
+        }
+
+        System.out.println("Choose Colour (1: White, 2: Red, 3: Pink, 4: Yellow, 5: Blue, 6: Assorted): ");
+        int colourChoice = scanner.nextInt();
+        double colourMarkup = 0;
+        switch (colourChoice) {
+            case 1: colourMarkup = Colour.WHITE; break;
+            case 2: colourMarkup = Colour.RED; break;
+            case 3: colourMarkup = Colour.PINK; break;
+            case 4: colourMarkup = Colour.YELLOW; break;
+            case 5: colourMarkup = Colour.BLUE; break;
+            case 6: colourMarkup = Colour.ASSORTED; break;
+            default: System.out.println("Invalid choice."); return;
+        }
+
+        Bouquet bouquet = new Bouquet(sizeMarkup, flowerMarkup, colourMarkup);
+        bouquets.add(bouquet);
+        System.out.println("Bouquet ordered. Price: " + bouquet.getPrice());
+    }
+
+    public void displayStatistics() {
+        int smallCount = 0, mediumCount = 0, largeCount = 0;
+        int roseCount = 0, lilyCount = 0, carnationCount = 0, daffodilCount = 0, gerberaCount = 0, chrysanthemumCount = 0, assortedCount = 0;
+        int whiteCount = 0, redCount = 0, pinkCount = 0, yellowCount = 0, blueCount = 0, mixedCount = 0;
+        double total = 0, min = Double.MAX_VALUE, max = Double.MIN_VALUE;
+
+        for (Bouquet bouquet : bouquets) {
+            double price = bouquet.getPrice();
+            total += price;
+            if (price < min) min = price;
+            if (price > max) max = price;
+        }
+
+        int count = bouquets.size();
+        double avg = count > 0 ? total / count : 0;
+
+        System.out.println("Statistics:");
+        System.out.println("Small: " + smallCount + ", Medium: " + mediumCount + ", Large: " + largeCount);
+        System.out.println("Rose: " + roseCount + ", Lily: " + lilyCount + ", Carnation: " + carnationCount + ", Daffodil: " + daffodilCount + ", Gerbera: " + gerberaCount + ", Chrysanthemum: " + chrysanthemumCount + ", Assorted: " + assortedCount);
+        System.out.println("White: " + whiteCount + ", Red: " + redCount + ", Pink: " + pinkCount + ", Yellow: " + yellowCount + ", Blue: " + blueCount + ", Mixed: " + mixedCount);
+        System.out.println("Minimum Price: " + min + ", Maximum Price: " + max + ", Range: " + (max - min) + ", Total Bouquets: " + count + ", Total Price: " + total + ", Average Price: " + avg);
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            displayMenu();
-            System.out.print("Please enter your choice (Order, Statistics, or Exit): ");
-            String choice = scanner.next().toLowerCase();
+            System.out.println("Flower shop menu\n1. Order bouquet and get the price.\n2. Display statistics\n3. Exit");
+            int choice = scanner.nextInt();
 
             switch (choice) {
-                case "order":
-                    orderDetailsAndPriceCalculation(scanner);
-                    break;
-                case "statistics":
-                    summaryStatistics();
-                    break;
-                case "exit":
-                    System.out.println("Exiting the program. Thank you for visiting the Flower Shop!");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid choice, please enter 'Order', 'Statistics', or 'Exit'.");
+                case 1: orderBouquet(); break;
+                case 2: displayStatistics(); break;
+                case 3: System.exit(0);
+                default: System.out.println("Invalid choice.");
             }
         }
     }
 
-    public static void displayMenu() {
-        System.out.println("\nFlower Shop Menu");
-        System.out.println("Order - Order bouquet and get the price.");
-        System.out.println("Statistics - Display statistics");
-        System.out.println("Exit - Exit the program");
-    }
-
-    public static void orderDetailsAndPriceCalculation(Scanner scanner) {
-        // Define mark-up values
-        double[] sizeMarkUp = {5.5, 7.5, 9.5};
-        double[] flowerMarkUp = {1.2, 1.3, 1.0, 1.0, 1.1, 1.1, 0.8};
-        double[] colorMarkUp = {1.3, 1.2, 1.1, 1.1, 1.2, 1.0};
-
-        // Get user input for size
-        System.out.print("Select size (1: Small, 2: Medium, 3: Large): ");
-        int sizeChoice = scanner.nextInt();
-        while (sizeChoice < 1 || sizeChoice > 3) {
-            System.out.print("Invalid choice. Select size (1: Small, 2: Medium, 3: Large): ");
-            sizeChoice = scanner.nextInt();
-        }
-        double sizePrice = sizeMarkUp[sizeChoice - 1];
-
-        // Get user input for flower
-        System.out.print("Select flower (1: Rose, 2: Lily, 3: Carnations, 4: Daffodil, 5: Gerbera, 6: Chrysanthemum, 7: Assorted): ");
-        int flowerChoice = scanner.nextInt();
-        while (flowerChoice < 1 || flowerChoice > 7) {
-            System.out.print("Invalid choice. Select flower (1: Rose, 2: Lily, 3: Carnations, 4: Daffodil, 5: Gerbera, 6: Chrysanthemum, 7: Assorted): ");
-            flowerChoice = scanner.nextInt();
-        }
-        double flowerPrice = flowerMarkUp[flowerChoice - 1];
-
-        // Get user input for color
-        System.out.print("Select color (1: White, 2: Red, 3: Pink, 4: Yellow, 5: Blue, 6: Mixed): ");
-        int colorChoice = scanner.nextInt();
-        while (colorChoice < 1 || colorChoice > 6) {
-            System.out.print("Invalid choice. Select color (1: White, 2: Red, 3: Pink, 4: Yellow, 5: Blue, 6: Mixed): ");
-            colorChoice = scanner.nextInt();
-        }
-        double colorPrice = colorMarkUp[colorChoice - 1];
-
-        // Calculate total price
-        double totalPrice = (flowerPrice + colorPrice) * sizePrice;
-        System.out.println("The price of the bouquet is: " + totalPrice);
-    }
-
-    public static void summaryStatistics() {
-        // Sample data from the provided scenario
-        String[] sizes = {"Medium", "Large", "Small", "Medium", "Large"};
-        String[] flowers = {"Rose", "Assorted", "Gerbera", "Lily", "Rose"};
-        String[] colors = {"Pink", "Assorted", "Yellow", "White", "Red"};
-        double[] prices = {17.25, 17.1, 12.1, 19.5, 22.8};
-
-        // Frequency counts
-        int[] sizeCount = new int[3];
-        int[] flowerCount = new int[7];
-        int[] colorCount = new int[6];
-
-        // Calculate frequency counts
-        for (String size : sizes) {
-            switch (size) {
-                case "Small":
-                    sizeCount[0]++;
-                    break;
-                case "Medium":
-                    sizeCount[1]++;
-                    break;
-                case "Large":
-                    sizeCount[2]++;
-                    break;
-            }
-        }
-
-        for (String flower : flowers) {
-            switch (flower) {
-                case "Rose":
-                    flowerCount[0]++;
-                    break;
-                case "Lily":
-                    flowerCount[1]++;
-                    break;
-                case "Carnations":
-                    flowerCount[2]++;
-                    break;
-                case "Daffodil":
-                    flowerCount[3]++;
-                    break;
-                case "Gerbera":
-                    flowerCount[4]++;
-                    break;
-                case "Chrysanthemum":
-                    flowerCount[5]++;
-                    break;
-                case "Assorted":
-                    flowerCount[6]++;
-                    break;
-            }
-        }
-
-        for (String color : colors) {
-            switch (color) {
-                case "White":
-                    colorCount[0]++;
-                    break;
-                case "Red":
-                    colorCount[1]++;
-                    break;
-                case "Pink":
-                    colorCount[2]++;
-                    break;
-                case "Yellow":
-                    colorCount[3]++;
-                    break;
-                case "Blue":
-                    colorCount[4]++;
-                    break;
-                case "Assorted":
-                    colorCount[5]++;
-                    break;
-            }
-        }
-
-        // Calculate price statistics
-        double minPrice = prices[0];
-        double maxPrice = prices[0];
-        double totalPrice = 0.0;
-        for (double price : prices) {
-            if (price < minPrice) minPrice = price;
-            if (price > maxPrice) maxPrice = price;
-            totalPrice += price;
-        }
-        double rangePrice = maxPrice - minPrice;
-        double averagePrice = totalPrice / prices.length;
-
-        // Display statistics
-        System.out.println("Size\tSmall\tMedium\tLarge");
-        System.out.println("Freq count\t" + sizeCount[0] + "\t" + sizeCount[1] + "\t" + sizeCount[2]);
-
-        System.out.println("Flower\tRose\tLily\tCarnation\tDaffodil\tGerbera\tChrysanthemum\tAssorted");
-        System.out.println("Freq count\t" + flowerCount[0] + "\t" + flowerCount[1] + "\t" + flowerCount[2] + "\t\t" +
-                flowerCount[3] + "\t\t" + flowerCount[4] + "\t\t" + flowerCount[5] + "\t\t" + flowerCount[6]);
-
-        System.out.println("Colour\tWhite\tRed\tPink\tYellow\tBlue\tMixed");
-        System.out.println("Freq count\t" + colorCount[0] + "\t" + colorCount[1] + "\t" + colorCount[2] + "\t" +
-                colorCount[3] + "\t" + colorCount[4] + "\t" + colorCount[5]);
-
-        System.out.println("Statistics\tMinimum\tMaximum\tRange\tTotal number of\tTotal price\tAverage price");
-        System.out.println("Price\t" + minPrice + "\t" + maxPrice + "\t" + rangePrice + "\t" + prices.length + "\t\t" + totalPrice + "\t" + averagePrice);
+    public static void main(String[] args) {
+        FlowerShop shop = new FlowerShop();
+        shop.run();
     }
 }
